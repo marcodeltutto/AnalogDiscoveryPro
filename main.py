@@ -26,7 +26,7 @@ async def lamp_control(status):
         _digitizer.lamp_off()
     return {"status": status}
 
-@app.get("/lamp_control/frequency/{freq}")
+@app.get("/lamp_frequency/{freq}")
 async def frequency(freq):
     print('Setting frequency to', float(freq))
     _digitizer.set_lamp_frequency(float(freq))
@@ -37,18 +37,26 @@ async def digitizer(command):
 
     if command == 'start_capture':
         print('start_capture')
+        status = _digitizer.start_capture()
+        return {"status": status}
+
     elif command == 'check_capture':
         print('check_capture')
+        status = _digitizer.check_capture()
+        return {"status": status}
+
     elif command == 'get_data':
         print('get_data')
-        return {"data": [1, 2, 3, 4, 5]*1000}
+        data = _digitizer.get_data()
+        return {"data": data}
+        # return {"data": [1, 2, 3, 4, 5]*1000}
         # return {"command": command}
     elif command == 'busy':
         print('busy')
-    elif command == 'get_data':
-        print('get_data')
-    elif command == 'get_data':
-        print('get_data')
+    # elif command == 'get_data':
+    #     print('get_data')
+    # elif command == 'get_data':
+    #     print('get_data')
 
     return {"command": command}
 

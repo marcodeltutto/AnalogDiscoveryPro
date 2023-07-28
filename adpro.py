@@ -14,6 +14,7 @@ class ADPro():
     def __init__(self):
         print('myclass __init__')
         self._device_data = device.open()
+        self.configure()
 
     def lamp_on(self):
         print('Turning lamp on')
@@ -30,10 +31,14 @@ class ADPro():
         wavegen.close(self._device_data)
 
     def set_lamp_frequency(self, frequency):
-        _lamp_frequency = frequency # Hz
-        if _is_flashing:
+        self._lamp_frequency = frequency # Hz
+        if self._is_flashing:
             self.lamp_off()
             self.lamp_on()
+
+    def configure(self):
+        scope.open(self._device_data, sampling_frequency=2e6, amplitude_range=100e-3)
+        scope.trigger(self._device_data, enable=True, source=scope.trigger_source.external[1], edge_rising=False)
 
     def start_capture(self):
         # self._buffer = scope.record(device_data, channel=1)
