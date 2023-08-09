@@ -37,7 +37,7 @@ class ADPro():
             self.lamp_on()
 
     def configure(self):
-        scope.open(self._device_data, sampling_frequency=2e6, amplitude_range=100e-3)
+        scope.open(self._device_data, sampling_frequency=2e6, buffer_size=6000, amplitude_range=100e-3)
         scope.trigger(self._device_data, enable=True, source=scope.trigger_source.external[1], edge_rising=False)
 
     def start_capture(self):
@@ -48,7 +48,7 @@ class ADPro():
         return scope.check_capture(self._device_data)
 
     def get_data(self):
-        self._buffer = scope.get_data(self._device_data, [1, 2])
+        self._buffer = scope.get_data(self._device_data, [1, 2, 3, 4])
         return self._buffer
 
     def close(self):

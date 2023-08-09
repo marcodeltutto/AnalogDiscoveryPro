@@ -73,6 +73,7 @@ def open(device_data, sampling_frequency=20e06, buffer_size=0, offset=0, amplitu
     if buffer_size == 0:
         buffer_size = data.max_buffer_size
     data.buffer_size = buffer_size
+    print('Buffer size:', buffer_size)
     if dwf.FDwfAnalogInBufferSizeSet(device_data.handle, ctypes.c_int(buffer_size)) == 0:
         check_error()
     
@@ -150,6 +151,17 @@ def trigger(device_data, enable, source=trigger_source.none, channel=1, timeout=
         if dwf.FDwfAnalogInTriggerLevelSet(device_data.handle, ctypes.c_double(level)) == 0:
             check_error()
 
+        # set trigger position
+        trigger_pos = 0.4 * data.buffer_size / data.sampling_frequency # 10%
+        #trigger_pos = 0
+        print('trigger_pos', trigger_pos)
+        if dwf.FDwfAnalogInTriggerPositionSet(device_data.handle, ctypes.c_double(trigger_pos)) == 0:
+            check_error()
+        
+        tp = ctypes.c_double(0)
+        dwf.FDwfAnalogInTriggerPositionGet(device_data.handle, ctypes.byref(tp))
+        print('tp', tp.value)
+
         # set trigger edge
         if edge_rising:
             # rising edge
@@ -191,7 +203,7 @@ def check_capture(device_data):
 
 """-----------------------------------------------------------------------"""
 
-def get_data(device_data, channels):
+def get_data(device_data, channels, channel_map=None):
 
     out_buffer = {}
 
@@ -203,8 +215,12 @@ def get_data(device_data, channels):
 
         # convert into list
         buffer = [float(element) for element in buffer]
+        print('len(buffer)', len(buffer))
 
-        out_buffer[channel] = buffer
+        key = channel
+        if channel_map is not None:
+            key = channel_map[channel]
+        out_buffer[key] = buffer
 
     return out_buffer
 
