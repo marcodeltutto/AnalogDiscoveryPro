@@ -31,6 +31,8 @@ class data:
     sampling_frequency = 20e06
     buffer_size = 8192
     max_buffer_size = 0
+    trigger_pos = 0.4 * buffer_size / sampling_frequency # 10%
+
 
 """-----------------------------------------------------------------------"""
 
@@ -42,6 +44,10 @@ class trigger_source:
     external = [None, constants.trigsrcExternal1, constants.trigsrcExternal2, constants.trigsrcExternal3, constants.trigsrcExternal4]
 
 """-----------------------------------------------------------------------"""
+
+def trigger_sample():
+    return data.trigger_pos
+
 
 def open(device_data, sampling_frequency=20e06, buffer_size=0, offset=0, amplitude_range=5):
     """
@@ -152,10 +158,9 @@ def trigger(device_data, enable, source=trigger_source.none, channel=1, timeout=
             check_error()
 
         # set trigger position
-        trigger_pos = 0.4 * data.buffer_size / data.sampling_frequency # 10%
         #trigger_pos = 0
-        print('trigger_pos', trigger_pos)
-        if dwf.FDwfAnalogInTriggerPositionSet(device_data.handle, ctypes.c_double(trigger_pos)) == 0:
+        print('trigger_pos', data.trigger_pos)
+        if dwf.FDwfAnalogInTriggerPositionSet(device_data.handle, ctypes.c_double(data.trigger_pos)) == 0:
             check_error()
         
         tp = ctypes.c_double(0)

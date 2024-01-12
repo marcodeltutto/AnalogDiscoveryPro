@@ -11,6 +11,10 @@ class ADPro():
     _lamp_frequency = 1 # Hz
     _is_flashing = False
 
+    _sampling_frequency = 2e6
+    _buffer_size = 6000
+    _amplitude_range = 100e-3
+
     def __init__(self):
         print('myclass __init__')
         self._device_data = device.open()
@@ -37,7 +41,10 @@ class ADPro():
             self.lamp_on()
 
     def configure(self):
-        scope.open(self._device_data, sampling_frequency=2e6, buffer_size=6000, amplitude_range=100e-3)
+        scope.open(self._device_data,
+                   sampling_frequency=self._sampling_frequency,
+                   buffer_size=self._buffer_size,
+                   amplitude_range=self._amplitude_range)
         scope.trigger(self._device_data, enable=True, source=scope.trigger_source.external[1], edge_rising=False)
 
     def start_capture(self):
@@ -54,8 +61,30 @@ class ADPro():
     def close(self):
         device.close(self._device_data)
 
-    # def get_data(self):
-    #     return self._buffer
+    def busy(self):
+        '''Not available for this digitizer'''
+        return False
+
+    def get_trigger_sample(self):
+        return scope.data.trigger_pos
+
+    def get_pre_trigger_samples(self):
+        return scope.data.trigger_pos
+
+    def get_post_trigger_samples(self):
+        return 0
+
+    def get_samples_per_second(self):
+        return self._sampling_frequency
+
+    def get_number_acquisitions(self):
+        return 1
+
+    def set_number_acquisitions(self):
+        pass
+
+    def get_input_range_volts(self):
+        return self.amplitude_range
 
     def print_f(self):
         print('Hi! print_f')

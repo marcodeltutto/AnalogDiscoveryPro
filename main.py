@@ -49,14 +49,32 @@ async def digitizer(command):
         print('get_data')
         data = _digitizer.get_data()
         return {"data": data}
-        # return {"data": [1, 2, 3, 4, 5]*1000}
-        # return {"command": command}
+
     elif command == 'busy':
-        print('busy')
-    # elif command == 'get_data':
-    #     print('get_data')
-    # elif command == 'get_data':
-    #     print('get_data')
+        busy = _digitizer.busy()
+        return {"busy": busy}
+
+    elif command == 'trigger_sample':
+        return {"trigger_sample": _digitizer.get_trigger_sample()}
+
+    elif command == 'samples_per_second':
+        return {"samples_per_second": _digitizer.get_samples_per_second()}
+
+    elif command == 'number_acquisitions':
+        return {"number_acquisitions": _digitizer.get_number_acquisitions()}
+
+    elif command == 'set_samples_per_second':
+        return {"none": None}
+
+    elif command == 'pre_trigger_samples':
+        return {"pre_trigger_samples": _digitizer.get_pre_trigger_samples()}
+
+    elif command == 'post_trigger_samples':
+        return {"post_trigger_samples": _digitizer.get_post_trigger_samples()}
+
+    elif command == 'input_range_volts':
+        return {"input_range_volts": _digitizer.get_input_range_volts()}
+
 
     return {"command": command}
 
