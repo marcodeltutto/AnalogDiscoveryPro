@@ -60,11 +60,14 @@ async def digitizer(command):
     elif command == 'samples_per_second':
         return {"samples_per_second": _digitizer.get_samples_per_second()}
 
+    elif command == 'set_samples_per_second':
+        return {"set_samples_per_second": None}
+
     elif command == 'number_acquisitions':
         return {"number_acquisitions": _digitizer.get_number_acquisitions()}
 
-    elif command == 'set_samples_per_second':
-        return {"none": None}
+    elif command == 'set_number_acquisitions':
+        return {"set_number_acquisitions": None}
 
     elif command == 'pre_trigger_samples':
         return {"pre_trigger_samples": _digitizer.get_pre_trigger_samples()}
