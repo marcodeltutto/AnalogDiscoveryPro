@@ -14,6 +14,9 @@ async def root():
     # mc.count()
     return {"message": "Hello World"}
 
+@app.get("/is_online/")
+async def is_online():
+    return {"is_online": True}
 
 @app.get("/lamp_control/{status}")
 async def lamp_control(status):
