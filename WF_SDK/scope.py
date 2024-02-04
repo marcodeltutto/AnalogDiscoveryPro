@@ -49,7 +49,7 @@ def trigger_sample():
     return data.trigger_pos
 
 
-def open(device_data, sampling_frequency=20e06, buffer_size=0, offset=0, amplitude_range=5):
+def open(device_data, sampling_frequency=20e06, buffer_size=0, offset=0, amplitude_range=5, n_acquisitions=1):
     """
         initialize the oscilloscope
 
@@ -58,6 +58,7 @@ def open(device_data, sampling_frequency=20e06, buffer_size=0, offset=0, amplitu
                     - buffer size, default is 0 (maximum)
                     - offset voltage in Volts, default is 0V
                     - amplitude range in Volts, default is +-5V
+                    - n_acquisitions: # up to 32768 or device buffer size (ADP3x50 128Mi/capture size)
     """
     # set global variables
     data.sampling_frequency = sampling_frequency
@@ -81,6 +82,9 @@ def open(device_data, sampling_frequency=20e06, buffer_size=0, offset=0, amplitu
     data.buffer_size = buffer_size
     print('Buffer size:', buffer_size)
     if dwf.FDwfAnalogInBufferSizeSet(device_data.handle, ctypes.c_int(buffer_size)) == 0:
+        check_error()
+
+    if dwf.FDwfAnalogInBuffersSet(hdwf, ctypes.c_int(n_acquisitions)) == 0:
         check_error()
     
     # set the acquisition frequency (in Hz)
