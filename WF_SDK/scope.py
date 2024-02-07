@@ -84,8 +84,8 @@ def open(device_data, sampling_frequency=20e06, buffer_size=0, offset=0, amplitu
     if dwf.FDwfAnalogInBufferSizeSet(device_data.handle, ctypes.c_int(buffer_size)) == 0:
         check_error()
 
-    if dwf.FDwfAnalogInBuffersSet(hdwf, ctypes.c_int(n_acquisitions)) == 0:
-        check_error()
+    # if dwf.FDwfAnalogInBuffersSet(hdwf, ctypes.c_int(n_acquisitions)) == 0:
+    #     check_error()
     
     # set the acquisition frequency (in Hz)
     if dwf.FDwfAnalogInFrequencySet(device_data.handle, ctypes.c_double(sampling_frequency)) == 0:
