@@ -28,7 +28,8 @@ class ADPro():
                          function=wavegen.function.square,
                          offset=1,
                          frequency=self._lamp_frequency,
-                         amplitude=1)
+                         amplitude=1,
+                         run_time=120)
         self._is_flashing = True
 
     def lamp_off(self):
