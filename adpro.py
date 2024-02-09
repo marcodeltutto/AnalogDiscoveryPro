@@ -108,12 +108,9 @@ if __name__ == "__main__":
     digitizer.lamp_off()
     print('Called lamp_off')
 
+    digitizer.start_capture()
+    while not digitizer.check_capture():
+        time.sleep(1)
+    print(digitizer.get_data())
+    
     digitizer.close()
-
-    # digitizer.start_capture()
-    # while not digitizer.check_capture():
-    #     time.sleep(1)
-    # print(digitizer.get_data())
-
-
-
