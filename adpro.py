@@ -61,7 +61,7 @@ class ADPro():
 
         for acquisition in range(self._n_acquisitions):
             
-            while acquisition_timeout_sec > time.time() - self._start:
+            while acquisition_timeout_sec > time.time() - start:
 
                 if scope.check_capture(self._device_data):
                     buffer = scope.get_data(self._device_data, [1, 2, 3, 4])
