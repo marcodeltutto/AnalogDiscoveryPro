@@ -7,7 +7,7 @@ class ADPro():
     counter = 0
 
     _device_data = None
-    _buffer = None
+    _buffers = None
     _lamp_frequency = 1 # Hz
     _is_flashing = False
 
@@ -52,14 +52,32 @@ class ADPro():
 
     def start_capture(self):
         # self._buffer = scope.record(device_data, channel=1)
+        self._buffers = {1: [], 2: [], 3: [], 4: []}
         return scope.start_capture(self._device_data)
 
     def check_capture(self):
-        return scope.check_capture(self._device_data)
+        acquisition_timeout_sec = 10
+        start = time.time()
+
+        for acquisition in range(self._n_acquisitions):
+            
+            while acquisition_timeout_sec > time.time() - self._start:
+
+                if scope.check_capture(self._device_data):
+                    buffer = scope.get_data(self._device_data, [1, 2, 3, 4])
+                    self._buffers[1].append(buffer[1])
+                    self._buffers[2].append(buffer[2])
+                    self._buffers[3].append(buffer[3])
+                    self._buffers[4].append(buffer[4])
+                    break
+
+        if len(self._buffers[1]) == self._n_acquisitions:
+            return True
+
+        return False
 
     def get_data(self):
-        self._buffer = scope.get_data(self._device_data, [1, 2, 3, 4])
-        return self._buffer
+        return self._buffers
 
     def close(self):
         device.close(self._device_data)
