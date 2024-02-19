@@ -166,7 +166,7 @@ def trigger(device_data, enable, source=trigger_source.none, channel=1, timeout=
         if trigger_pos is None:
             print('using default trigger pos')
             trigger_pos = data.trigger_pos
-        print('trigger_pos', data.trigger_pos)
+        print('trigger_pos', trigger_pos)
         if dwf.FDwfAnalogInTriggerPositionSet(device_data.handle, ctypes.c_double(trigger_pos)) == 0:
             check_error()
         
