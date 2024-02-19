@@ -126,7 +126,7 @@ def measure(device_data, channel):
 
 """-----------------------------------------------------------------------"""
 
-def trigger(device_data, enable, source=trigger_source.none, channel=1, timeout=0, edge_rising=True, level=0):
+def trigger(device_data, enable, source=trigger_source.none, channel=1, timeout=0, edge_rising=True, level=0, trigger_pos=None):
     """
         set up triggering
 
@@ -137,6 +137,7 @@ def trigger(device_data, enable, source=trigger_source.none, channel=1, timeout=
                     - auto trigger timeout in seconds, default is 0
                     - trigger edge rising - True means rising, False means falling, default is rising
                     - trigger level in Volts, default is 0V
+                    - trigger pos in seconds, the trigger position
     """
     if enable and source != constants.trigsrcNone:
         # enable/disable auto triggering
@@ -162,9 +163,10 @@ def trigger(device_data, enable, source=trigger_source.none, channel=1, timeout=
             check_error()
 
         # set trigger position
-        #trigger_pos = 0
+        if trigger_pos is None:
+            trigger_pos = data.trigger_pos
         print('trigger_pos', data.trigger_pos)
-        if dwf.FDwfAnalogInTriggerPositionSet(device_data.handle, ctypes.c_double(data.trigger_pos)) == 0:
+        if dwf.FDwfAnalogInTriggerPositionSet(device_data.handle, ctypes.c_double(trigger_pos)) == 0:
             check_error()
         
         tp = ctypes.c_double(0)

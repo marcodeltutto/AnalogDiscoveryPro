@@ -15,6 +15,7 @@ class ADPro():
     _buffer_size = 6000
     _amplitude_range = 100e-3
     _n_acquisitions = 10
+    _trigger_pos = 0.1*_buffer_size/_sampling_frequency
 
     def __init__(self):
         print('myclass __init__')
@@ -48,7 +49,11 @@ class ADPro():
                    buffer_size=self._buffer_size,
                    amplitude_range=self._amplitude_range,
                    n_acquisitions=self._n_acquisitions)
-        scope.trigger(self._device_data, enable=True, source=scope.trigger_source.external[1], edge_rising=False)
+        scope.trigger(self._device_data,
+                      enable=True,
+                      source=scope.trigger_source.external[1],
+                      edge_rising=False,
+                      trigger_pos=self._trigger_pos)
 
     def start_capture(self):
         # self._buffer = scope.record(device_data, channel=1)
