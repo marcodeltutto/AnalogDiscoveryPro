@@ -14,7 +14,7 @@ class ADPro():
     _sampling_frequency = 2e6
     _buffer_size = 6000
     _amplitude_range = 100e-3
-    _n_acquisitions = 1
+    _n_acquisitions = 10
     _trigger_pos = 0.4*_buffer_size/_sampling_frequency
 
     def __init__(self):
