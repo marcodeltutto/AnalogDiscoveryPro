@@ -17,6 +17,9 @@ class ADPro():
     _n_acquisitions = 10
     _trigger_pos = 0.4*_buffer_size/_sampling_frequency
 
+    _lamp_runtime = 120 # seconds
+    _lamp_repetition = 1 # run for 120 seconds only one time
+
     def __init__(self):
         print('myclass __init__')
         self._device_data = device.open()
@@ -30,7 +33,8 @@ class ADPro():
                          offset=1,
                          frequency=self._lamp_frequency,
                          amplitude=1,
-                         run_time=120)
+                         run_time=self._lamp_runtime,
+                         repeat=self._lamp_repetition)
         self._is_flashing = True
 
     def lamp_off(self):
