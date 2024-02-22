@@ -112,7 +112,7 @@ class ADPro():
 
     def set_number_acquisitions(self, n_acquisitions):
         self._n_acquisitions = n_acquisitions
-        scope.close()
+        scope.close(self._device_data)
         self.configure()
 
     def get_input_range_volts(self):
