@@ -111,7 +111,7 @@ class ADPro():
         return self._n_acquisitions
 
     def set_number_acquisitions(self, n_acquisitions):
-        self._n_acquisitions = n_acquisitions
+        self._n_acquisitions = int(n_acquisitions)
         scope.close(self._device_data)
         self.configure()
 
