@@ -69,9 +69,6 @@ async def digitizer(command):
     elif command == 'number_acquisitions':
         return {"number_acquisitions": _digitizer.get_number_acquisitions()}
 
-    elif command == 'set_number_acquisitions':
-        return {"set_number_acquisitions": None}
-
     elif command == 'pre_trigger_samples':
         return {"pre_trigger_samples": _digitizer.get_pre_trigger_samples()}
 
@@ -80,6 +77,13 @@ async def digitizer(command):
 
     elif command == 'input_range_volts':
         return {"input_range_volts": _digitizer.get_input_range_volts()}
+
+@app.get("/digitizer/set_number_acquisitions/{n_acquisitions}")
+async def set_number_acquisitions(n_acquisitions):
+
+    _digitizer.set_number_acquisitions(n_acquisitions)
+
+    return {"set_number_acquisitions": _digitizer.get_number_acquisitions()}
 
 
     return {"command": command}

@@ -21,7 +21,7 @@ class ADPro():
     _lamp_repetition = 1 # run for 120 seconds only one time
 
     def __init__(self):
-        print('myclass __init__')
+        print('Initializing ADPro')
         self._device_data = device.open()
         self.configure()
 
@@ -110,8 +110,10 @@ class ADPro():
     def get_number_acquisitions(self):
         return self._n_acquisitions
 
-    def set_number_acquisitions(self):
-        pass
+    def set_number_acquisitions(self, n_acquisitions):
+        self._n_acquisitions = n_acquisitions
+        scope.close()
+        self.configure()
 
     def get_input_range_volts(self):
         return self.amplitude_range
