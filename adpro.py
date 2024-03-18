@@ -12,9 +12,9 @@ class ADPro():
     _is_flashing = False
 
     _sampling_frequency = 2e6
-    _buffer_size = 8000
+    _buffer_size = 3000
     _amplitude_range = 100e-3
-    _n_acquisitions = 10
+    _n_acquisitions = 20
     _trigger_pos = 0.4*_buffer_size/_sampling_frequency
 
     _lamp_runtime = 120 # seconds
