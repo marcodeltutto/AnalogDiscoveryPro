@@ -10,6 +10,15 @@
 - Clone this repo, if not done already
 - Enter and run the API: `sudo /home/digilent/.local/bin/uvicorn main:app --reload`
 
+On the PrM server, you can control the digitizer via:
+- `localhost:8000/lamp_control/on`: turns the flash lamp on
+- `localhost:8000/lamp_control/off`: turns the flash lamp off
+- `localhost:8000/lamp_frequency/10`: sets the lamp frequency to 10 Hz
+- `localhost:8000/digitizer/start_capture`: starts the data acquisition
+- `localhost:8000/digitizer/check_capture`: checks if the acquisition if over
+- `localhost:8000/digitizer/get_data`: returns the collected data
+- For more commands, see `main.py`. 
+
 ### Run Manually
 
 - From the PrM server, log in to the digitizer via `ssh -L 8000:localhost:8000 digilent@10.226.35.155`
